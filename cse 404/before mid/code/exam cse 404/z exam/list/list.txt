@@ -1,0 +1,22 @@
+?- [X,Y,Z]=[john,likes,mary].
+X = john,
+Y = likes,
+Z = mary.
+
+?- [ [the , Y] | Z]=[[X,mine],[is,here]].
+Y = mine,
+Z = [[is, here]],
+X = the.
+
+?- member(a,[a,b,c]). % is 'a' a member of [a,b,c]
+true.
+
+
+?- [X|Y]=[1,2,3],
+?- member(2,Y).
+true
+
+
+
+
+?- append([a,b,c],[1,2,3],L).

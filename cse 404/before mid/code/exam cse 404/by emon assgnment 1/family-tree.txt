@@ -1,0 +1,110 @@
+male(khalek).
+male(ripon).
+male(khokon).
+male(mojibur).
+male(ruhul).
+male(choton).
+male(robi).
+male(kabir).
+male(shihab).
+male(mizan).
+male(shihab).
+male(sumon).
+
+female(khusbu).
+female(khushi).
+female(khuki).
+female(mitu).
+female(tamanna).
+female(zerin).
+female(muntaha).
+female(ruponti).
+female(maisha).
+
+
+father(khalek,ripon).
+father(khalek,khokon).
+father(khalek,mojibur).
+father(khalek,mitu).
+father(ripon,ruhul).
+father(ripon,choton).
+father(khokon,khusbu).
+father(khokon,khushi).
+father(khokon,khuki).
+father(mojibur,robi).
+father(mojibur,kabir).
+father(mojibur,shihab).
+father(ruhul,ruponti).
+
+mother(mitu,tamanna).
+mother(mitu,zerin).
+mother(mitu,minhaz).
+mother(tamanna,muntaha).
+mother(muntaha,maisha).
+
+
+%rules
+
+ancestor(X,Y):-
+	parent(X,Y).
+
+ancestor(X,Y):-
+	parent(X,Z),
+	ancestor(Z,Y).
+	
+grandparent(X,Y):-
+	parent(W,Y),parent(X,W).
+	
+siblings(X,Y):-
+	parent(Z,X),parent(Z,Y),X\=Y.
+ 
+parent(Gurdian, Son_daughter) :-
+        father(Gurdian, Son_daughter);
+		mother(Gurdian, Son_daughter).
+        
+ 
+brother(X,Y):-
+	siblings(X,Y),
+	male(X),
+	format('~w is brother of ~w. ~n',[X,Y]).
+
+son(X,Y):-
+	male(X),parent(Y,X).
+
+daughter(X,Y):-
+	female(X),parent(Y,X).
+
+uncle(X,Y):-
+	male(X),
+	parent(Z,Y),
+	siblings(X,Z),
+	format('~w is uncle of ~w. ~n',[X,Y]).
+
+husband(X,Y):-
+	father(X,Z),mother(Y,Z),
+	format('~w is Husband of ~w. ~n',[X,Y]).
+
+wife(X,Y):-
+	mother(X,Z),father(Y,Z),
+	format('~w is wife of ~w. ~n',[X,Y]).
+	
+first_cousin(X,Y):-
+	parent(Z,X),parent(W,Y),
+    siblings(Z,W),
+	format('~w is first_cousin of ~w. ~n',[X,Y]).
+	
+first_cousin_one_removed(X,Y):-
+	parent(Z,Y),
+	first_cousin(X,Z).
+	
+	
+second_cousin(X,Y):-
+    grandparent(W,X),
+	grandparent(Z,Y),
+	parent(P,W),parent(P,Z),
+	format('~w is second_cousin of ~w. ~n',[X,Y]).
+	
+first_cousin_twice_remove(X,Y):-
+    grandparent(Z,Y),
+	first_cousin(X,Z).
+	
